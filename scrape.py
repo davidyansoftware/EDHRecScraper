@@ -16,14 +16,13 @@ for commander in commanders:
         percents[card.name] = percents.get(card.name, 0) + int(card.percent)
         synergies[card.name] = synergies.get(card.name, 0) + int(card.synergy)
 
-cubeCards = {}
+edhrecCards = set(count.keys())
 cubeCards = set(CubeTutor.readCsv("commander_cube.csv"))
+missingCards = edhrecCards - cubeCards
 
 potentialCuts = sorted(cubeCards, key=lambda card: percents.get(card, 0))
 DiskWrite.writeToFile("potentialcuts.txt", potentialCuts, count, percents)
 
-allCards = set(count.keys())
-missingCards = allCards - cubeCards
 potentialAdds = sorted(missingCards, key=lambda card: percents.get(card, 0), reverse=True)
 DiskWrite.writeToFile("potentialadds.txt", potentialAdds, count, percents)
 

@@ -22,8 +22,7 @@ def createDriver():
 
     driverPath = ChromeDriverManager().install()
     driver = webdriver.Chrome(executable_path=driverPath, options=options)
-    
-    print("driver created")
+
     return driver
 
 class Card:
