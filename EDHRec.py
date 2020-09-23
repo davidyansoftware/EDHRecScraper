@@ -32,21 +32,8 @@ class Card:
 
 def getCommander(driver, commander, threshold):
     print(commander)
-    commander = commander.replace(" ", "-")
-    commander = commander.replace("'", "")
-    commander = commander.replace(",", "")
-    url = "https://edhrec.com/commanders/" + commander
-
-    try:
-        driver.get(url)
-    except Exception:
-        driver.quit()
-        raise
-
-    time.sleep(3)
-
-    pageHtml = driver.page_source
-    soup = BeautifulSoup(pageHtml, 'html.parser')
+    commanderHtml = getCommanderHtml(driver, commander)
+    soup = BeautifulSoup(commanderHtml, 'html.parser')
 
     cardsDivs = soup.findAll("div", attrs={"class": "cardlist"})
     cardContainers = []
@@ -68,3 +55,23 @@ def getCommander(driver, commander, threshold):
             cards.append(card)
 
     return cards
+
+def formatEdhrecUrl(card):
+    card = card.replace(" ", "-")
+    card = card.replace("'", "")
+    card = card.replace(",", "")
+    return card
+
+def getCommanderHtml(driver, commander):
+    commander = formatEdhrecUrl(commander)
+    url = "https://edhrec.com/commanders/" + commander
+
+    try:
+        driver.get(url)
+    except Exception:
+        driver.quit()
+        raise
+
+    time.sleep(3)
+
+    return driver.page_source
