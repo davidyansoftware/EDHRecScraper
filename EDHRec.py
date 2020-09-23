@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+import EDHRecCache
+
 #TODO lazy load this
 def createDriver():
     options = Options()
@@ -64,14 +66,22 @@ def formatEdhrecUrl(card):
 
 def getCommanderHtml(driver, commander):
     commander = formatEdhrecUrl(commander)
-    url = "https://edhrec.com/commanders/" + commander
 
+    if (EDHRecCache.cachedCommanderExists(commander)):
+        return EDHRecCache.getCachedCommanderHtml(commander)
+
+    url = "https://edhrec.com/commanders/" + commander
     try:
         driver.get(url)
     except Exception:
         driver.quit()
         raise
 
+    # sleep serves dual purpose of:
+    # rate limiting
+    # waiting for clientside rendering
     time.sleep(3)
 
-    return driver.page_source
+    html = driver.page_source
+    EDHRecCache.cacheCommanderHTML(commander, html)
+    return html
