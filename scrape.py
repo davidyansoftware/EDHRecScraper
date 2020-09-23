@@ -1,6 +1,6 @@
 import CubeTutor
 import EDHRec
-from pathlib import Path
+import DiskWrite
 
 driver = EDHRec.createDriver()
 
@@ -19,39 +19,12 @@ for commander in commanders:
 cubeCards = {}
 cubeCards = set(CubeTutor.readCsv("commander_cube.csv"))
 
-outputdir = Path("output")
-outputdir.mkdir(exist_ok=True)
-
 potentialCuts = sorted(cubeCards, key=lambda card: percents.get(card, 0))
-outputPath = outputdir.joinpath("potentialcuts.txt")
-output = open(outputPath, "w")
-for card in potentialCuts:
-    commanderCount = count.get(card, 0)
-    totalPercent = percents.get(card, 0)
-
-    output.write(card)
-    output.write("\t")
-    output.write(str(commanderCount))
-    output.write("\t")
-    output.write(str(totalPercent))
-    output.write("\n")
-output.close()
+DiskWrite.writeToFile("potentialcuts.txt", potentialCuts, count, percents)
 
 allCards = set(count.keys())
 missingCards = allCards - cubeCards
 potentialAdds = sorted(missingCards, key=lambda card: percents.get(card, 0), reverse=True)
-outputPath = outputdir.joinpath("potentialadds.txt")
-output = open(outputPath, "w")
-for card in potentialAdds:
-    commanderCount = count.get(card, 0)
-    totalPercent = percents.get(card, 0)
-
-    output.write(card)
-    output.write("\t")
-    output.write(str(commanderCount))
-    output.write("\t")
-    output.write(str(totalPercent))
-    output.write("\n")
-output.close()
+DiskWrite.writeToFile("potentialadds.txt", potentialAdds, count, percents)
 
 driver.quit()
