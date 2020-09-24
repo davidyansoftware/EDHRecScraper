@@ -2,7 +2,7 @@ Rhys the Redeemed
 Ayli, Eternal Pilgrim
 Derevi, Empyrial Tactician
 Jhoira of the Ghitu
-Marath, Will of the Wild
+Ghired, Conclave Exile
 Atla Palani, Nest Tender
 Atraxa, Praetors' Voice
 Brago, King Eternal
@@ -14,7 +14,7 @@ Kess, Dissident Mage
 Omnath, Locus of Creation
 Lazav, Dimir Mastermind
 Meren of Clan Nel Toth
-Mizzix of the Izmagnus
+Niv-Mizzet, Parun
 Nicol Bolas, the Ravager
 Queen Marchesa
 Rakdos, Lord of Riots
@@ -30,7 +30,7 @@ Riku of Two Reflections
 Karametra, God of Harvests
 Tatyova, Benthic Druid
 The Gitrog Monster
-The Mimeoplasm
+Yarok, the Desecrated
 The Scarab God
 Aurelia, the Warleader
 Muldrotha, the Gravetide
