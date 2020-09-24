@@ -1,12 +1,12 @@
+import time
 from pathlib import Path
 
 cacheDir = Path("__edhreccache__")
 commanderCacheDir = cacheDir.joinpath("commander")
 
-#TODO ttl
 def cachedCommanderExists(commander):
     cachePath = commanderCacheDir.joinpath(commander)
-    return cachePath.exists() and cachePath.is_file()
+    return cachePath.exists() and cachePath.is_file() and isFresh(cachePath)
 
 def getCachedCommanderHtml(commander):
     cachePath = commanderCacheDir.joinpath(commander)
@@ -20,3 +20,8 @@ def cacheCommanderHTML(commander, html):
     cache = open(cachePath, "w")
     cache.write(html)
     cache.close()
+
+def isFresh(file):
+    modTime = file.stat().st_mtime
+    currTime = time.time()
+    return currTime - modTime < 259200 # 3 days
