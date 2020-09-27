@@ -1,5 +1,7 @@
 import json
 
+import CardUtil
+
 def getCardData(filePath):
     file = open(filePath, "r")
     cards = json.load(file)
@@ -8,7 +10,7 @@ def getCardData(filePath):
     data = cards["data"]
     allCardNames = set(data.keys())
     for cardName in allCardNames:
-        standardCardName = standardizeCardName(cardName)
+        standardCardName = CardUtil.standardizeCardName(cardName)
         if (cardName != standardCardName):
             data[standardCardName] = data[cardName]
             del data[cardName]
@@ -16,7 +18,7 @@ def getCardData(filePath):
     return data
 
 def getColorIdentity(cardName):
-    cardName = standardizeCardName(cardName)
+    cardName = CardUtil.standardizeCardName(cardName)
     cards = cardData[cardName]
     atomicCard = cards[0]
     colorIdentity = atomicCard["colorIdentity"]
@@ -29,13 +31,6 @@ def getColorIdentity(cardName):
         return colorIdentity[0]
     else:
         return "Multi"
-
-def standardizeCardName(cardName):
-    if (cardName == "Lim-Dûl's Vault"):
-        return "Lim-Dul's Vault"
-    # edhrec doesn't include split names, so we're normalizing all names
-    cardNames = cardName.split(" // ")
-    return cardNames[0]
 
 #TODO fetch and cache this file
 cardData = getCardData("AtomicCards.json")

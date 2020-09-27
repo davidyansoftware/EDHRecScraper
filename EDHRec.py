@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
+import CardUtil
 import EDHRecCache
 
 #TODO lazy load this
@@ -52,6 +53,7 @@ def getCommander(driver, commander, threshold):
         (percent, synergy) = re.findall(r"([-]?\d+)%", cardLabel)
 
         if (int(percent) > threshold):
+            cardName = CardUtil.standardizeCardName(cardName)
             card = Card(cardName, int(percent), int(synergy))
             cards.append(card)
 
